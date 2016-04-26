@@ -35,13 +35,13 @@ pair in =embrace=, look at the README of [[https://github.com/cute-jumper/embrac
   you don't like it.
 
   The keys that are processed by =evil-surround= are saved in the variable
-  =evil-embrace-evil-surround-key=. The default value is:
+  =evil-embrace-evil-surround-keys=. The default value is:
   : (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
 
   Note that this variable is buffer-local. You should change it in the hook:
   : (add-hook 'LaTeX-mode-hook
   :     (lambda ()
-  :        (add-to-list 'evil-embrace-evil-surround-key ?o)))
+  :        (add-to-list 'evil-embrace-evil-surround-keys ?o)))
 
   Only these keys saved in the variable are processed by =evil-surround=, and
   all the other keys will be processed by =embrace=.

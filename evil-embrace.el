@@ -91,7 +91,7 @@
 ;;   whenever you don't like it.
 
 ;;   The keys that are processed by `evil-surround' are saved in the
-;;   variable `evil-embrace-evil-surround-key'. The default value is:
+;;   variable `evil-embrace-evil-surround-keys'. The default value is:
 ;;   ,----
 ;;   | (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
 ;;   `----
@@ -101,7 +101,7 @@
 ;;   ,----
 ;;   | (add-hook 'LaTeX-mode-hook
 ;;   |     (lambda ()
-;;   |        (add-to-list 'evil-embrace-evil-surround-key ?o)))
+;;   |        (add-to-list 'evil-embrace-evil-surround-keys ?o)))
 ;;   `----
 
 ;;   Only these keys saved in the variable are processed by
@@ -113,9 +113,9 @@
 (require 'embrace)
 (require 'evil-surround)
 
-(defvar evil-embrace-evil-surround-key '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
+(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
   "Keys that should be processed by `evil-surround'")
-(make-variable-buffer-local 'evil-embrace-evil-surround-key)
+(make-variable-buffer-local 'evil-embrace-evil-surround-keys)
 
 ;;; `evil-surround' integration
 (defun evil-embrace-evil-surround-delete (char &optional outer inner)
@@ -126,7 +126,7 @@
     (delete-region (overlay-end inner) (overlay-end outer))
     (goto-char (overlay-start outer)))
    (t
-    (if (member char evil-embrace-evil-surround-key)
+    (if (member char evil-embrace-evil-surround-keys)
         (let* ((outer (evil-surround-outer-overlay char))
                (inner (evil-surround-inner-overlay char)))
           (unwind-protect
@@ -143,13 +143,13 @@
      ((and outer inner)
       (evil-surround-delete char outer inner)
       (let ((key (read-char)))
-        (if (member key evil-embrace-evil-surround-key)
+        (if (member key evil-embrace-evil-surround-keys)
             (evil-surround-region (overlay-start outer)
                                   (overlay-end outer)
                                   nil (if (evil-surround-valid-char-p key) key char))
           (embrace--insert key (copy-overlay outer)))))
      (t
-      (if (member char evil-embrace-evil-surround-key)
+      (if (member char evil-embrace-evil-surround-keys)
           (let* ((outer (evil-surround-outer-overlay char))
                  (inner (evil-surround-inner-overlay char)))
             (unwind-protect
@@ -159,7 +159,7 @@
               (when inner (delete-overlay inner))))
         (setq overlay (embrace--delete char t))
         (let ((key (read-char)))
-          (if (member key evil-embrace-evil-surround-key)
+          (if (member key evil-embrace-evil-surround-keys)
               (evil-surround-region (overlay-start overlay)
                                     (overlay-end overlay)
                                     nil (if (evil-surround-valid-char-p key) key char))
