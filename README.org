@@ -20,12 +20,12 @@ whatever surrounding pairs you like, and adding, changing, and deleting will
 The idea of this package is that let =evil-surround= handle the keys that
 corresponds to existing text objects (i.e., =(=, =[=, etc.), which is what
 =evil-surround= is good at, and make =embrace= handles all the other keys of
-custom surrounding pairs so that you can also benifit from the extensibility
+custom surrounding pairs so that you can also benefit from the extensibility
 that =embrace= offers.
 
-In a word, you can use the default =evil-surround=. You don't have to change it.
-But whenever you want to add a custom surrounding pair, use =evil-embrace=
-instead.
+In a word, you can use the default =evil-surround=. But whenever you want to add
+a custom surrounding pair, use =embrace= instead. To see how to add a custom
+pair in =embrace=, look at the README of [[https://github.com/cute-jumper/embrace.el][embrace.el]].
 
 * Usage
   To enable the =evil-surround= integration:
@@ -38,8 +38,7 @@ instead.
   =evil-embrace-evil-surround-key=. The default value is:
   : (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
 
-  Note that this variable is also buffer-local. You should change it in the
-  hook:
+  Note that this variable is buffer-local. You should change it in the hook:
   : (add-hook 'LaTeX-mode-hook
   :     (lambda ()
   :        (add-to-list 'evil-embrace-evil-surround-key ?o)))
