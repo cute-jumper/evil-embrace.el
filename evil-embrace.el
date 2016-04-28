@@ -117,7 +117,18 @@
   "Keys that should be processed by `evil-surround'")
 (make-variable-buffer-local 'evil-embrace-evil-surround-keys)
 
-;;; `evil-surround' integration
+;; --------------------------- ;;
+;; `evil-surround' integration ;;
+;; --------------------------- ;;
+(defvar evil-embrace--evil-surround-region-def (symbol-function 'evil-surround-region))
+
+(evil-define-operator evil-embrace-evil-surround-region (beg end type char &optional force-new-line)
+  (interactive "<R>c")
+  (if (member char evil-embrace-evil-surround-keys)
+      (funcall evil-embrace--evil-surround-region-def beg end type char
+               force-new-line)
+    (embrace--add-internal beg end char)))
+
 (defun evil-embrace-evil-surround-delete (char &optional outer inner)
   (interactive "c")
   (cond
@@ -169,12 +180,14 @@
 ;;;###autoload
 (defun evil-embrace-enable-evil-surround-integration ()
   (interactive)
+  (advice-add 'evil-surround-region :override 'evil-embrace-evil-surround-region)
   (advice-add 'evil-surround-change :override 'evil-embrace-evil-surround-change)
   (advice-add 'evil-surround-delete :override 'evil-embrace-evil-surround-delete))
 
 ;;;###autoload
 (defun evil-embrace-disable-evil-surround-integration ()
   (interactive)
+  (advice-remove 'evil-surround-region 'evil-embrace-evil-surround-region)
   (advice-remove 'evil-surround-change 'evil-embrace-evil-surround-change)
   (advice-remove 'evil-surround-delete 'evil-embrace-evil-surround-delete))
 
