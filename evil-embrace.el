@@ -93,7 +93,7 @@
 ;;   The keys that are processed by `evil-surround' are saved in the
 ;;   variable `evil-embrace-evil-surround-keys'. The default value is:
 ;;   ,----
-;;   | (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
+;;   | (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t)
 ;;   `----
 
 ;;   Note that this variable is also buffer-local. You should change it in
@@ -113,7 +113,7 @@
 (require 'embrace)
 (require 'evil-surround)
 
-(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?b ?B ?t)
+(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t)
   "Keys that should be processed by `evil-surround'")
 (make-variable-buffer-local 'evil-embrace-evil-surround-keys)
 
