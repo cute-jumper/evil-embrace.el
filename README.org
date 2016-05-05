@@ -45,3 +45,13 @@ pair in =embrace=, look at the README of [[https://github.com/cute-jumper/embrac
 
   Only these keys saved in the variable are processed by =evil-surround=, and
   all the other keys will be processed by =embrace=.
+
+* Screencasts
+  Use the following settings:
+  : (add-hook 'org-mode-hook 'embrace-org-mode-hook)
+  : (evil-embrace-enable-evil-surround-integration)
+
+  In an org-mode file, we can change the surrounding pair in the following way
+  (note that this whole process can't be achieved solely by =evil-surround=):
+
+  [[./screencasts/evil-embrace.gif]]

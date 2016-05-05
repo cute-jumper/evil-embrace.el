@@ -21,6 +21,8 @@
 
 ;;; Commentary:
 
+;; Screencast: http://github.com/cute-jumper/evil-embrace/screencasts/evil-embrace.gif
+
 ;;                              ______________
 
 ;;                               EVIL-EMBRACE
