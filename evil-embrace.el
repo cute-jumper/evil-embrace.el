@@ -3,7 +3,7 @@
 ;; Copyright (C) 2016  Junpeng Qiu
 
 ;; Author: Junpeng Qiu <qjpchmail@gmail.com>
-;; Package-Requires: ((emacs "24.4") (embrace "0.1.0") (evil-surround "0") (evil "1.2.12"))
+;; Package-Requires: ((emacs "24.4") (embrace "0.1.0") (evil-surround "0"))
 ;; Keywords: extensions
 
 ;; This program is free software; you can redistribute it and/or modify
