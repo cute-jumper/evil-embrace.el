@@ -115,6 +115,9 @@
 (require 'embrace)
 (require 'evil-surround)
 
+(defvar evil-embrace-show-help-p t
+  "Whether to show the help or not.")
+
 (defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t)
   "Keys that should be processed by `evil-surround'")
 (make-variable-buffer-local 'evil-embrace-evil-surround-keys)
@@ -160,7 +163,7 @@
             (embrace--create-help-string extra-list))))
 
 (defun evil-embrace--show-pair-help-buffer ()
-  (and embrace-show-help-p
+  (and evil-embrace-show-help-p
        (embrace--show-help-buffer (evil-embrace--get-help-string))))
 
 ;; --------------------------- ;;
