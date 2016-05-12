@@ -154,11 +154,11 @@
                     (embrace--pair-struct-to-keys
                      (assoc-default k embrace--pairs-list)))
                   extra-keys))
-    (concat (propertize "evil-surround" 'face evil-embrace-evil-surround-keys)
+    (concat (propertize "evil-surround" 'face 'evil-embrace-section-title-face)
             "\n"
             (embrace--create-help-string evil-list)
             "\n"
-            (propertize "evil-embrace" 'face evil-embrace-evil-surround-keys)
+            (propertize "evil-embrace" 'face 'evil-embrace-section-title-face)
             "\n"
             (embrace--create-help-string extra-list))))
 
