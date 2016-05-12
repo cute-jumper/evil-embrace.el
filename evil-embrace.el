@@ -21,8 +21,6 @@
 
 ;;; Commentary:
 
-;; Screencast: http://github.com/cute-jumper/evil-embrace/screencasts/evil-embrace.gif
-
 ;;                              ______________
 
 ;;                               EVIL-EMBRACE
@@ -37,6 +35,7 @@
 ;; 1 Overview
 ;; 2 Why
 ;; 3 Usage
+;; 4 Screencasts
 
 
 ;; Evil integration of [embrace.el].
@@ -74,11 +73,15 @@
 ;;   that corresponds to existing text objects (i.e., `(', `[', etc.),
 ;;   which is what `evil-surround' is good at, and make `embrace' handles
 ;;   all the other keys of custom surrounding pairs so that you can also
-;;   benifit from the extensibility that `embrace' offers.
+;;   benefit from the extensibility that `embrace' offers.
 
-;;   In a word, you can use the default `evil-surround'. You don't have to
-;;   change it. But whenever you want to add a custom surrounding pair, use
-;;   `evil-embrace' instead.
+;;   In a word, you can use the default `evil-surround'. But whenever you
+;;   want to add a custom surrounding pair, use `embrace' instead. To see
+;;   how to add a custom pair in `embrace', look at the README of
+;;   [embrace.el].
+
+
+;; [embrace.el] https://github.com/cute-jumper/embrace.el
 
 
 ;; 3 Usage
@@ -98,8 +101,8 @@
 ;;   | (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t)
 ;;   `----
 
-;;   Note that this variable is also buffer-local. You should change it in
-;;   the hook:
+;;   Note that this variable is buffer-local. You should change it in the
+;;   hook:
 ;;   ,----
 ;;   | (add-hook 'LaTeX-mode-hook
 ;;   |     (lambda ()
@@ -109,6 +112,28 @@
 ;;   Only these keys saved in the variable are processed by
 ;;   `evil-surround', and all the other keys will be processed by
 ;;   `embrace'.
+
+;;   If you find the help message popup annoying, use the following code to
+;;   disable it:
+;;   ,----
+;;   | (setq evil-embrace-show-help-p nil)
+;;   `----
+
+
+;; 4 Screencasts
+;; =============
+
+;;   Use the following settings:
+;;   ,----
+;;   | (add-hook 'org-mode-hook 'embrace-org-mode-hook)
+;;   | (evil-embrace-enable-evil-surround-integration)
+;;   `----
+
+;;   In an org-mode file, we can change the surrounding pair in the
+;;   following way (note that this whole process can't be achieved solely
+;;   by `evil-surround'):
+
+;;   [./screencasts/evil-embrace.gif]
 
 ;;; Code:
 

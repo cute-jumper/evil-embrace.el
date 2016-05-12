@@ -46,6 +46,9 @@ pair in =embrace=, look at the README of [[https://github.com/cute-jumper/embrac
   Only these keys saved in the variable are processed by =evil-surround=, and
   all the other keys will be processed by =embrace=.
 
+  If you find the help message popup annoying, use the following code to disable it:
+  : (setq evil-embrace-show-help-p nil)
+
 * Screencasts
   Use the following settings:
   : (add-hook 'org-mode-hook 'embrace-org-mode-hook)
