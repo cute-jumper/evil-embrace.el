@@ -119,6 +119,50 @@
   "Keys that should be processed by `evil-surround'")
 (make-variable-buffer-local 'evil-embrace-evil-surround-keys)
 
+;; ----------- ;;
+;; help system ;;
+;; ----------- ;;
+(defface evil-embrace-section-title-face
+  '((t .  (:inherit font-lock-doc-face)))
+  "Face for section title."
+  :group 'embrace)
+
+(defun evil-embrace--get-help-string ()
+  (let ((evil-keys evil-embrace-evil-surround-keys)
+        (extra-keys
+         (cl-set-difference (mapcar #'car embrace--pairs-list)
+                            evil-embrace-evil-surround-keys))
+        evil-list extra-list)
+    (dolist (k evil-embrace-evil-surround-keys)
+      (let ((key (format "%c" k)))
+        (push (list
+               (propertize key 'face 'embrace-help-key-face)
+               (propertize embrace-help-separator 'face 'embrace-help-separator-face)
+               (propertize (car (last
+                                 (split-string
+                                  (symbol-name
+                                   (lookup-key evil-inner-text-objects-map key))
+                                  "-")))
+                           'face
+                           'embrace-help-mark-func-face))
+              evil-list)))
+    (setq extra-list
+          (mapcar (lambda (k)
+                    (embrace--pair-struct-to-keys
+                     (assoc-default k embrace--pairs-list)))
+                  extra-keys))
+    (concat (propertize "evil-surround" 'face evil-embrace-evil-surround-keys)
+            "\n"
+            (embrace--create-help-string evil-list)
+            "\n"
+            (propertize "evil-embrace" 'face evil-embrace-evil-surround-keys)
+            "\n"
+            (embrace--create-help-string extra-list))))
+
+(defun evil-embrace--show-pair-help-buffer ()
+  (and embrace-show-help-p
+       (embrace--show-help-buffer (evil-embrace--get-help-string))))
+
 ;; --------------------------- ;;
 ;; `evil-surround' integration ;;
 ;; --------------------------- ;;
@@ -179,19 +223,29 @@
             (embrace--insert key overlay))
           (when overlay (delete-overlay overlay))))))))
 
+(defun evil-embrace-show-help-advice (orig-func &rest args)
+  (evil-embrace--show-pair-help-buffer)
+  (unwind-protect
+      (apply orig-func args)
+    (embrace--hide-help-buffer)))
+
 ;;;###autoload
 (defun evil-embrace-enable-evil-surround-integration ()
   (interactive)
   (advice-add 'evil-surround-region :override 'evil-embrace-evil-surround-region)
   (advice-add 'evil-surround-change :override 'evil-embrace-evil-surround-change)
-  (advice-add 'evil-surround-delete :override 'evil-embrace-evil-surround-delete))
+  (advice-add 'evil-surround-delete :override 'evil-embrace-evil-surround-delete)
+  (advice-add 'evil-surround-edit :around 'evil-embrace-show-help-advice)
+  (advice-add 'evil-Surround-edit :around 'evil-embrace-show-help-advice))
 
 ;;;###autoload
 (defun evil-embrace-disable-evil-surround-integration ()
   (interactive)
   (advice-remove 'evil-surround-region 'evil-embrace-evil-surround-region)
   (advice-remove 'evil-surround-change 'evil-embrace-evil-surround-change)
-  (advice-remove 'evil-surround-delete 'evil-embrace-evil-surround-delete))
+  (advice-remove 'evil-surround-delete 'evil-embrace-evil-surround-delete)
+  (advice-remove 'evil-surround-edit 'evil-embrace-show-help-advice)
+  (advice-remove 'evil-Surround-edit 'evil-embrace-show-help-advice))
 
 (provide 'evil-embrace)
 ;;; evil-embrace.el ends here
