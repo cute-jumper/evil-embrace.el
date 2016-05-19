@@ -143,7 +143,7 @@
 (defvar evil-embrace-show-help-p t
   "Whether to show the help or not.")
 
-(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t)
+(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t ?\C-\[)
   "Keys that should be processed by `evil-surround'")
 (make-variable-buffer-local 'evil-embrace-evil-surround-keys)
 
@@ -162,17 +162,21 @@
                             evil-embrace-evil-surround-keys))
         evil-list extra-list)
     (dolist (k evil-embrace-evil-surround-keys)
-      (let ((key (format "%c" k)))
+      (let (key value)
+        (if (char-equal ?\C-\[ k)
+            (setq key "ESC"
+                  value "quit")
+          (setq key (format "%c" k)
+                value
+                (car (last
+                      (split-string
+                       (symbol-name
+                        (lookup-key evil-inner-text-objects-map key))
+                       "-")))))
         (push (list
                (propertize key 'face 'embrace-help-key-face)
                (propertize embrace-help-separator 'face 'embrace-help-separator-face)
-               (propertize (car (last
-                                 (split-string
-                                  (symbol-name
-                                   (lookup-key evil-inner-text-objects-map key))
-                                  "-")))
-                           'face
-                           'embrace-help-mark-func-face))
+               (propertize value 'face 'embrace-help-mark-func-face))
               evil-list)))
     (setq extra-list
           (mapcar (lambda (k)
