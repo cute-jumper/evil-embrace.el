@@ -1,4 +1,6 @@
 #+TITLE: evil-embrace
+[[https://melpa.org/#/evil-embrace][file:https://melpa.org/packages/evil-embrace-badge.svg]]
+
 Evil integration of [[https://github.com/cute-jumper/embrace.el][embrace.el]].
 
 * Overview
