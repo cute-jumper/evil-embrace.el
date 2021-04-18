@@ -230,7 +230,8 @@
   (let (overlay)
     (cond
      ((and outer inner)
-      (evil-surround-delete char outer inner)
+      (unless (evil-surround-delete-char-noop-p char)
+        (evil-surround-delete char outer inner))
       (let ((key (read-char)))
         (if (member key evil-embrace-evil-surround-keys)
             (evil-surround-region (overlay-start outer)
