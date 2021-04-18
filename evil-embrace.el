@@ -98,7 +98,7 @@
 ;;   The keys that are processed by `evil-surround' are saved in the
 ;;   variable `evil-embrace-evil-surround-keys'. The default value is:
 ;;   ,----
-;;   | (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t)
+;;   | (?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t ?w ?W ?s ?p)
 ;;   `----
 
 ;;   Note that this variable is buffer-local. You should change it in the
@@ -143,7 +143,7 @@
 (defvar evil-embrace-show-help-p t
   "Whether to show the help or not.")
 
-(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t ?\C-\[)
+(defvar evil-embrace-evil-surround-keys '(?\( ?\[ ?\{ ?\) ?\] ?\} ?\" ?\' ?< ?> ?b ?B ?t ?\C-\[ ?w ?W ?s ?p)
   "Keys that should be processed by `evil-surround'")
 (make-variable-buffer-local 'evil-embrace-evil-surround-keys)
 
@@ -230,7 +230,8 @@
   (let (overlay)
     (cond
      ((and outer inner)
-      (evil-surround-delete char outer inner)
+      (unless (evil-surround-delete-char-noop-p char)
+        (evil-surround-delete char outer inner))
       (let ((key (read-char)))
         (if (member key evil-embrace-evil-surround-keys)
             (evil-surround-region (overlay-start outer)
