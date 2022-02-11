@@ -211,7 +211,8 @@
   (interactive "c")
   (cond
    ((and outer inner)
-    (delete-region (overlay-start outer) (overlay-start inner))
+    (setq evil-surround-last-deleted-left
+          (delete-and-extract-region (overlay-start outer) (overlay-start inner)))
     (delete-region (overlay-end inner) (overlay-end outer))
     (goto-char (overlay-start outer)))
    (t
