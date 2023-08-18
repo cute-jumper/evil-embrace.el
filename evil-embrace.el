@@ -217,8 +217,9 @@
     (goto-char (overlay-start outer)))
    (t
     (if (member char evil-embrace-evil-surround-keys)
-        (let* ((outer (evil-surround-outer-overlay char))
-               (inner (evil-surround-inner-overlay char)))
+        (let* ((delims (cdr (assoc char evil-surround-pairs-alist)))
+               (outer (evil-surround-outer-overlay delims char))
+               (inner (evil-surround-inner-overlay delims char)))
           (unwind-protect
               (when (and outer inner)
                 (evil-surround-delete char outer inner))
@@ -241,8 +242,9 @@
           (embrace--insert key (copy-overlay outer)))))
      (t
       (if (member char evil-embrace-evil-surround-keys)
-          (let* ((outer (evil-surround-outer-overlay char))
-                 (inner (evil-surround-inner-overlay char)))
+          (let* ((delims (cdr (assoc char evil-surround-pairs-alist)))
+                 (outer (evil-surround-outer-overlay delims char))
+                 (inner (evil-surround-inner-overlay delims char)))
             (unwind-protect
                 (when (and outer inner)
                   (evil-surround-change char outer inner))
